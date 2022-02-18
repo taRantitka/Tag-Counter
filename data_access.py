@@ -48,7 +48,7 @@ class DataAccess:
                 'SELECT site_name, url, check_date, report as "report [pickle]" FROM reports WHERE site_name=?',
                 (site_name,)).fetchone()
 
-            logging.info(f"Data retrieved from database.")
+            logging.info(f"{site_name} Data retrieved from database.")
 
             return data
         except sqlite3.Error as error:
