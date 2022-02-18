@@ -8,6 +8,8 @@ __pycache__/
 
 # Distribution / packaging
 .idea
+tag_counter.db
+logs.log
 .Python
 build/
 develop-eggs/
