@@ -1,5 +1,7 @@
 import argparse
-
+from scraper import Scraper
+from data_access import DataAccess
+from synonym_helper import SynonymHelper
 
 class ArgumentHandler:
 
@@ -14,11 +16,14 @@ class ArgumentHandler:
     def handle(self):
         args = self.parser.parse_args()
 
+
         if args.app_name == self.APP_NAME:
 
             if args.get is not None:
-                print("GET")
+                Scraper.scrape(args.get[0])
             elif args.view is not None:
-                print("VIEW")
+
+                SynonymHelper.remove("hhh")
+                #print(DataAccess().get(args.view[0]))
         else:
-            self.parser.print_help()
+            pass
