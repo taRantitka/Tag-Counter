@@ -8,7 +8,7 @@ class SynonymHelper:
     def read(cls, synonym):
         with open(cls.DEFAULT_FILE_NAME, "r") as file:
             cur_yaml = yaml.safe_load(file)
-        return cur_yaml[synonym]
+        return cur_yaml.get(synonym)
 
     @classmethod
     def write(cls, synonym, site_name):

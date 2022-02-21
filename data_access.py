@@ -1,6 +1,7 @@
 import sqlite3
 import logging
 import pickle
+from synonym_helper import SynonymHelper
 
 
 class DataAccess:
@@ -43,6 +44,11 @@ class DataAccess:
             logging.exception(error)
 
     def get(self, site_name):
+        synonym = SynonymHelper.read(site_name)
+
+        if synonym is not None:
+            site_name = synonym
+
         try:
             data = self.conn.execute(
                 'SELECT site_name, url, check_date, report as "report [pickle]" FROM reports WHERE site_name=?',
