@@ -5,12 +5,17 @@ from tld import get_fld
 from bs4 import BeautifulSoup
 from collections import Counter
 from data_access import DataAccess
+from synonym_helper import SynonymHelper
 
 
 class Scraper:
 
     @staticmethod
     def scrape(url):
+        synonym = SynonymHelper.read(url)
+        if synonym is not None:
+            url = f"https://{synonym}"
+
         logging.info(f"{url} is scraping...")
 
         page = requests.get(url)
