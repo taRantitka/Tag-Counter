@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .idea
-tag_counter.db
+tagcounter/tag_counter.db
 logs.log
 .Python
 build/
@@ -130,4 +130,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/tag_counter.db
+/tagcounter/tag_counter.db

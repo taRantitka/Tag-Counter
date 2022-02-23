@@ -1,7 +1,8 @@
 import sqlite3
 import logging
 import pickle
-from synonym_helper import SynonymHelper
+import os
+from .synonym_helper import SynonymHelper
 
 
 class DataAccess:
@@ -11,13 +12,13 @@ class DataAccess:
     def __init__(self, db_name=DEFAULT_DB_NAME):
         sqlite3.register_converter("pickle", pickle.loads)
         sqlite3.register_adapter(list, pickle.dumps)
-        self.conn = sqlite3.connect(db_name, detect_types=sqlite3.PARSE_DECLTYPES)
+        self.conn = sqlite3.connect(os.path.join(os.path.dirname(__file__), db_name), detect_types=sqlite3.PARSE_DECLTYPES)
 
     def generate(self, generator_name=DEFAULT_GENERATOR_NAME):
         try:
             cursor = self.conn.cursor()
 
-            with open(generator_name, 'r') as sqlite_file:
+            with open(os.path.join(os.path.dirname(__file__), generator_name), 'r') as sqlite_file:
                 sql_script = sqlite_file.read()
 
             cursor.execute(sql_script)
@@ -44,7 +45,7 @@ class DataAccess:
             logging.exception(error)
 
     def get(self, site_name):
-        synonym = SynonymHelper.read(site_name)
+        synonym = SynonymHelper().read(site_name)
 
         if synonym is not None:
             site_name = synonym

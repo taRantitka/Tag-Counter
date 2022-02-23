@@ -1,7 +1,6 @@
 from tkinter import *
-from tkinter import messagebox
-from scraper import Scraper
-from data_access import DataAccess
+from .scraper import Scraper
+from .data_access import DataAccess
 
 
 class GUIClient:
@@ -27,10 +26,15 @@ class GUIClient:
 
         self.output = Text(root, height=10, width=35, state=DISABLED)
         self.output.grid(row=3, columnspan=2, padx=10, pady=10)
+
+        self.status = Text(root, height=5, width=35, state=DISABLED)
+        self.status.grid(row=4, columnspan=2, padx=10, pady=10)
+
         root.mainloop()
 
     def view(self):
         self.output.config(state="normal")
+        self.status.config(state="normal")
 
         da = DataAccess()
         report = da.get(self.site_name.get())
@@ -39,6 +43,11 @@ class GUIClient:
         self.output.insert(END, report)
         self.output.config(state=DISABLED)
 
+        self.status.insert(END, f"\nTags for {self.site_name} have been read from database.")
+        self.status.config(state=DISABLED)
+
     def download(self):
         Scraper.scrape(self.site_name.get())
-        messagebox.showinfo("Info", "Tags have been scraped.")
+        self.status.config(state="normal")
+        self.status.insert(END, f"\nTags for {self.site_name} have been scraped.")
+        self.status.config(state=DISABLED)
